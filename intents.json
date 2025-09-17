@@ -1,0 +1,196 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": ["Hi","Hello","Hey","Good day","Greetings","How are you?","Is anyone there?","What's up?","Namaste","Hi bot","Hey there","Good morning","Good evening"],
+      "responses": ["Hello! How can I help you stay prepared today?","Hi there! Ask me anything about disaster preparedness.","Good to see you! Need tips for emergencies?"],
+      "context_set": ""
+    },
+
+    {
+      "tag": "goodbye",
+      "patterns": ["Goodbye","See you later","Bye","Take care","I am leaving","Have a good day","See ya","Talk later","Bye bye"],
+      "responses": ["Stay safe! Goodbye!","Goodbye, and remember to keep your emergency kit ready.","Take care! Stay prepared."],
+      "context_set": ""
+    },
+
+    {
+      "tag": "fallback",
+      "patterns": ["I don't understand","???","Help","What?","Say again","Unknown question","Something else"],
+      "responses": ["I'm sorry, I didn't quite get that. You can ask me about disasters like earthquakes, floods, or emergency numbers.","Could you rephrase your question? I can help with disaster preparedness tips.","I'm still learning. Ask me about earthquakes, floods, cyclones, or emergency contacts."],
+      "context_set": ""
+    },
+
+    {
+      "tag": "earthquake",
+      "patterns": ["What should I do during an earthquake?","How to prepare for an earthquake?","Earthquake safety tips","Steps to stay safe in an earthquake","Earthquake preparedness checklist","Earthquake emergency plan","How can I be safe in an earthquake?","Earthquake do and don't"],
+      "responses": [
+        "Drop, cover, and hold on until shaking stops.",
+        "Take shelter under a sturdy table or desk and protect your head and neck.",
+        "Stay away from windows, mirrors and exterior walls during shaking.",
+        "If outdoors, move to an open area away from buildings, trees and power lines.",
+        "If in a vehicle, stop safely and stay in the car until the shaking ends.",
+        "After the quake, check yourself and others for injuries before moving.",
+        "Turn off gas if you smell a leak; shut off utilities when safe to do so.",
+        "Expect and prepare for aftershocks; move carefully around damaged areas.",
+        "Have a 72-hour emergency kit with water, food, flashlight, radio and first-aid supplies.",
+        "Create and practice a family emergency communication and meeting plan.",
+        "Secure heavy furniture, water heaters and appliances to prevent tipping.",
+        "Store breakable and heavy items on low shelves to reduce hazards.",
+        "Learn how to shut off electricity and gas in your home safely.",
+        "Keep important documents backed up digitally and in a waterproof container.",
+        "Teach children 'drop, cover, and hold on' and run earthquake drills regularly.",
+        "Know the safe spots in each room: under strong tables and interior walls away from windows."
+      ],
+      "context_set": ""
+    },
+
+    {
+      "tag": "flood",
+      "patterns": ["How to prepare for a flood?","Flood safety tips","What to do before a flood?","How can I stay safe in flooding?","Steps to take in a flood emergency","Flood preparedness checklist","Flood emergency plan","Flood do and don't"],
+      "responses": [
+        "Move to higher ground right away if flooding is forecast or water levels rise.",
+        "Do not walk, swim, or drive through floodwaters; moving water and hidden hazards are dangerous.",
+        "Keep a waterproof emergency kit with food, water, medicines and copies of important documents.",
+        "Elevate electrical panels, appliances and utilities if you live in a high-risk flood zone.",
+        "Develop and practice evacuation routes and have a family meeting point on higher ground.",
+        "Store valuables and irreplaceable items in waterproof containers or on higher floors.",
+        "Turn off electricity at the main breaker if floodwater enters your home and it's safe to do so.",
+        "Sign up for local emergency alerts and monitor official channels for evacuation orders.",
+        "Keep vehicles fueled and have emergency cash available in case ATMs are down.",
+        "Use sandbags and barriers to slow water entry where advised and practical.",
+        "Avoid playing or working in floodwater due to contamination and unseen debris.",
+        "If trapped, move to the highest point in the building and call for help.",
+        "Keep children and pets away from floodwater and teach them the dangers.",
+        "After flooding, avoid contact with contaminated water and follow health guidance on cleanup.",
+        "Photograph damage for insurance and keep receipts for emergency repairs.",
+        "Consider flood insurance if you live in a flood-prone area; standard home insurance often excludes flood damage."
+      ],
+      "context_set": ""
+    },
+
+    {
+      "tag": "hurricane_cyclone_typhoon",
+      "patterns": ["How to prepare for a hurricane?","Cyclone safety tips","Typhoon emergency preparedness","Steps to stay safe during a hurricane","What to do in strong winds and heavy rain?","Hurricane preparedness checklist","Cyclone emergency plan","Typhoon do and don't"],
+      "responses": [
+        "Board up windows or install storm shutters and secure outdoor furniture to prevent projectiles.",
+        "Assemble a 7-day emergency kit with water, food, medicine, batteries, flashlights and a first-aid kit.",
+        "Keep your vehicle fueled and maintain a supply of cash in case electronic systems are down.",
+        "Know your local evacuation routes and have a plan for pets and people with special needs.",
+        "Secure important documents in waterproof containers and store digital backups offsite.",
+        "Follow official evacuation orders early; do not wait until conditions worsen.",
+        "During the storm, stay in a small interior room without windows and have your kit close by.",
+        "Avoid using candles—use battery-powered lights to reduce fire risk during outages.",
+        "Clear gutters and drains to reduce localized flooding around your property.",
+        "Keep cell phones charged and power banks ready; conserve battery life when needed.",
+        "Check for local shelter openings designed for severe storms and know routes to them.",
+        "Avoid floodwater after the storm and beware of standing water housing hazards or contamination.",
+        "Document damage with photos for insurance and report hazards to authorities.",
+        "Help neighbors, especially the elderly or disabled, when safe to do so after the storm.",
+        "If you lose power for extended periods, follow guidance for safe generator use to avoid carbon monoxide risks.",
+        "Keep important medications and medical supplies accessible and have prescriptions refilled ahead of storms."
+      ],
+      "context_set": ""
+    },
+
+    {
+      "tag": "wildfire",
+      "patterns": ["How to prepare for a wildfire?","Wildfire safety tips","What should I do during a forest fire?","Steps to stay safe in a wildfire","Wildfire preparedness checklist","Forest fire emergency plan","Wildfire do and don't","How to evacuate from a wildfire?"],
+      "responses": [
+        "Create at least 30 feet of defensible space around structures by clearing dead vegetation and flammable materials.",
+        "Prune trees and shrubs so lower branches are removed to reduce ladder fuels.",
+        "Store firewood and flammable materials away from the house and elevated off the ground.",
+        "Install ember-resistant vents and screens to prevent embers from entering your home.",
+        "Assemble evacuation kits with N95 masks, important documents, medications and pet supplies.",
+        "Plan and practice multiple evacuation routes and designate meeting points for family members.",
+        "When a wildfire is near, evacuate early—do not wait for mandatory orders if you feel threatened.",
+        "Close all windows and doors, shut off HVAC systems, and remove flammable curtains and furniture from windows.",
+        "Keep hoses and sprinklers ready to wet areas around your property if safe to do so.",
+        "Wear protective clothing and N95 masks to reduce smoke inhalation if you must be outdoors.",
+        "Keep vehicles fueled and parked facing the exit for a quick departure.",
+        "Listen to official sources for evacuation instructions and road closures.",
+        "Do not return until authorities declare the area safe—watch for hot spots and weakened structures.",
+        "Keep a list of local shelters that accept pets or have pet plans in place.",
+        "Take photos of your property before evacuating for insurance and recovery planning.",
+        "After the fire, be cautious of ash, weakened trees, and hazardous debris during cleanup."
+      ],
+      "context_set": ""
+    },
+
+    {
+      "tag": "tornado",
+      "patterns": ["How to prepare for a tornado?","Tornado safety tips","What should I do during a tornado warning?","Where to go during a tornado?","Steps to stay safe in a tornado","Tornado preparedness checklist","Tornado emergency plan","Tornado do and don't"],
+      "responses": [
+        "Go immediately to a basement or storm cellar; if not available, an interior room on the lowest floor with no windows.",
+        "Cover your head and neck with your arms and protect yourself with sturdy furniture or a mattress if available.",
+        "Keep a battery-powered NOAA weather radio and a flashlight in your shelter area.",
+        "If you are in a vehicle or mobile home, leave it immediately and seek more substantial shelter.",
+        "Practice tornado drills and ensure every family member knows where to go and who to contact.",
+        "Wear sturdy shoes to protect feet from debris after a tornado passes.",
+        "Keep helmets or head protection available for children and those sheltering.",
+        "Avoid seeking shelter under highway overpasses; they can be more dangerous during tornadoes.",
+        "Have an emergency kit stored in your shelter area with water, snacks and first-aid supplies.",
+        "Monitor local alerts and heed warnings immediately rather than waiting for visual confirmation.",
+        "If trapped under debris, cover your mouth and remain calm while signaling rescuers.",
+        "After the tornado, stay clear of damaged buildings and downed utility lines.",
+        "Use text messages or social media to check in with family to avoid overloading phone networks.",
+        "Keep a list of local emergency shelters and routes in case you must evacuate your home.",
+        "Secure loose outdoor items after storms to prevent future hazards."
+      ],
+      "context_set": ""
+    },
+
+    {
+      "tag": "tsunami",
+      "patterns": ["How to prepare for a tsunami?","Tsunami safety tips","What should I do if a tsunami is coming?","Steps to stay safe in a tsunami","Evacuation for tsunami","Tsunami preparedness checklist","Tsunami emergency plan","Tsunami do and don't"],
+      "responses": [
+        "If you feel a strong or long earthquake near the coast, move inland or to higher ground immediately.",
+        "Learn and practice tsunami evacuation routes and locate high ground and assembly points.",
+        "Do not return to low-lying coastal areas until authorities confirm it is safe.",
+        "Keep an evacuation kit with water, food, radios and important documents ready at all times if you live near the coast.",
+        "Follow tsunami warning systems such as sirens, radio alerts and official mobile messages.",
+        "If you are on a boat, move to deeper water away from the shoreline when instructed and safe to do so.",
+        "Teach family members to recognize natural tsunami warnings: strong earthquakes, unusual ocean behavior or loud ocean noises.",
+        "If you hear a tsunami warning, evacuate immediately—do not wait to collect belongings.",
+        "Stay tuned to local authorities for updates on additional waves and safe return times.",
+        "Have a family communication plan that includes out-of-area contacts in case local networks are down.",
+        "Keep maps of evacuation routes and practice them with all household members regularly.",
+        "If driving during an alert, do not drive toward the coast—move inland and park in safe areas.",
+        "Prepare for possible infrastructure damage; bridges and roads may be impassable after an event.",
+        "Store vital records in waterproof containers and keep digital backups offsite.",
+        "If you live in a tsunami zone, consider vertical evacuation structures if available in your community.",
+        "Participate in local tsunami drills and community preparedness programs to stay ready."
+      ],
+      "context_set": ""
+    },
+
+    {
+      "tag": "blizzard_winterstorm",
+      "patterns": ["How to prepare for a blizzard?","Winter storm safety tips","What should I do during a snowstorm?","Steps to stay safe in extreme cold","Blizzard preparedness checklist","Winter storm emergency plan","How to survive a blizzard?","Blizzard do and don't"],
+      "responses": [
+        "1. Stay indoors and conserve heat; seal drafts and insulate windows.",
+        "2. Keep extra blankets, warm clothing, and a sufficient food and water supply.",
+        "3. Keep emergency supplies in your car including blankets, shovel, and sand or cat litter for traction.",
+        "4. Avoid unnecessary travel during storms and check local road conditions.",
+        "5. Have a plan for heating if the power goes out (generators, safe fuel storage).",
+        "6. Check on neighbors, especially elderly or vulnerable people."
+      ],
+      "context_set": ""
+    },
+
+    {
+      "tag": "emergency_numbers_india",
+      "patterns": ["Emergency numbers in India","Who to call in an emergency?","Give me emergency contact numbers","Help line numbers in India","Disaster emergency helpline India","What number for ambulance police fire?","National disaster helpline"],
+      "responses": [
+        "1. All-in-one Emergency Helpline: 112",
+        "2. Police: 100",
+        "3. Fire: 101",
+        "4. Ambulance: 102",
+        "5. Disaster Management / NDMA: 1078 (Toll-free)",
+        "6. Women Helpline: 1091; Child Helpline: 1098; Road Accident Emergency Service: 1033",
+        "7. Save these numbers on speed dial and keep a written copy in your wallet."
+      ],
+      "context_set": ""
+    }
+  ]
+}

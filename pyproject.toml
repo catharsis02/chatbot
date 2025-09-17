@@ -1,0 +1,14 @@
+[project]
+name = "new-chatbot"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "beautifulsoup4>=4.13.5",
+    "flask>=3.1.2",
+    "nltk>=3.9.1",
+    "numpy<1.25.2",
+    "requests>=2.32.5",
+    "tensorflow==2.14",
+]
