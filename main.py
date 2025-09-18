@@ -4,7 +4,7 @@ import pickle
 import numpy as np
 import nltk
 from nltk.stem import WordNetLemmatizer
-from tensorflow.keras.models import load_model
+# TensorFlow model is loaded lazily below; avoid importing at module import time
 
 # For web scraping
 import requests
@@ -15,7 +15,23 @@ lemmatizer = WordNetLemmatizer()
 intents = json.load(open('intents.json'))
 words = pickle.load(open('model/words.pkl', 'rb'))
 classes = pickle.load(open('model/classes.pkl', 'rb'))
-model = load_model('model/chatbot_model.keras')
+# Load the Keras model lazily to avoid import-time failures / heavy memory usage.
+model = None
+_model_load_attempted = False
+_model_load_failed = False
+
+# Lightweight keyword-based intent fallback (used if model can't be loaded).
+_RULES = {
+    'greeting': ['hello', 'hi', 'hey', 'good morning', 'good evening'],
+    'goodbye': ['bye', 'goodbye', 'see you', 'take care'],
+    'thanks': ['thanks', 'thank you', 'thx'],
+    'earthquake': ['earthquake', 'tremor', 'shake', 'shaking'],
+    'flood': ['flood', 'flooding', 'inundation', 'heavy rain', 'river overflow'],
+    'hurricane_cyclone_typhoon': ['cyclone', 'hurricane', 'typhoon', 'storm surge'],
+    'wildfire': ['fire', 'wildfire', 'bushfire', 'forest fire'],
+    'tsunami': ['tsunami', 'sea wave', 'tidal wave'],
+    'preparedness': ['prepare', 'preparation', 'kit', 'emergency kit', 'evacuate', 'evacuation']
+}
 
 # Generic preparedness tips used to ensure at least 5 points are returned
 DEFAULT_PREPAREDNESS_TIPS = [
@@ -170,6 +186,31 @@ def bag_of_words(sentence):
 
 def predict_class(sentence):
     """Predict intent class for input sentence."""
+    global model, _model_load_attempted, _model_load_failed
+    # Ensure model is loaded (attempt lazily).
+    if model is None and not _model_load_attempted:
+        try:
+            _model_load_attempted = True
+            from tensorflow.keras.models import load_model as _load_model
+            model = _load_model('model/chatbot_model.keras')
+        except Exception:
+            _model_load_failed = True
+
+    # If model failed to load, use a simple keyword-based fallback
+    text = sentence.lower() if isinstance(sentence, str) else ''
+    if model is None:
+        matches = []
+        for intent_tag, keywords in _RULES.items():
+            for kw in keywords:
+                if kw in text:
+                    matches.append({'intent': intent_tag, 'probability': '0.9'})
+                    break
+        # If we found matches, return them sorted (simple deterministic order)
+        if matches:
+            return matches
+        # No rule matched — return empty so the caller can fallback
+        return []
+
     bow = bag_of_words(sentence)
     res = model.predict(np.array([bow]))[0]
     ERROR_THRESHOLD = 0.25
