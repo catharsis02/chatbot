@@ -9,6 +9,7 @@ from tensorflow.keras.models import load_model
 # For web scraping
 import requests
 from bs4 import BeautifulSoup
+import updates
 
 lemmatizer = WordNetLemmatizer()
 intents = json.load(open('intents.json'))
@@ -49,23 +50,78 @@ def fetch_latest_disaster_updates(intent_tag):
     
     try:
         for url in urls:
-            resp = requests.get(url, timeout=5)
-            if resp.status_code == 200:
-                data = resp.json()
-                
-                # Parse different API responses
-                if 'features' in data:  # USGS format
-                    for feature in data['features'][:3]:
-                        props = feature['properties']
-                        tips.append(f"Alert: Magnitude {props.get('mag')} earthquake near {props.get('place')}")
-                        
-                elif 'data' in data:  # ReliefWeb format
-                    for item in data['data'][:3]:
-                        tips.append(f"Update: {item['fields'].get('name', 'Disaster alert')} - {item['fields'].get('status', 'Active')}")
-                        
-                elif 'entry' in data:  # RSS format
-                    for entry in data['entry'][:3]:
-                        tips.append(f"Weather Alert: {entry.get('title', 'Weather update available')}")
+            try:
+                resp = requests.get(url, timeout=6)
+            except Exception:
+                # skip unreachable sources
+                continue
+
+            if resp.status_code != 200:
+                continue
+
+            content_type = resp.headers.get('content-type', '').lower()
+
+            # If the endpoint returns JSON, try to parse and extract known fields
+            if 'application/json' in content_type or resp.text.lstrip().startswith('{'):
+                try:
+                    data = resp.json()
+                except Exception:
+                    data = None
+
+                if isinstance(data, dict):
+                    # USGS GeoJSON
+                    if 'features' in data and isinstance(data['features'], list):
+                        for feature in data['features'][:3]:
+                            props = feature.get('properties', {})
+                            mag = props.get('mag')
+                            place = props.get('place')
+                            tips.append(f"Alert: Magnitude {mag} earthquake near {place}" if mag or place else "Earthquake alert")
+
+                    # ReliefWeb style
+                    elif 'data' in data and isinstance(data['data'], list):
+                        for item in data['data'][:3]:
+                            fields = item.get('fields', {}) if isinstance(item, dict) else {}
+                            title = fields.get('name') or fields.get('title') or item.get('title')
+                            status = fields.get('status') or 'Active'
+                            tips.append(f"Update: {title} - {status}")
+
+                    # Generic list or dict with entries
+                    elif 'entry' in data and isinstance(data['entry'], list):
+                        for entry in data['entry'][:3]:
+                            title = entry.get('title') or entry.get('title', 'Update available')
+                            tips.append(f"Update: {title}")
+
+            # Otherwise try parsing as XML / RSS / HTML and extract item/title tags
+            else:
+                try:
+                    soup = BeautifulSoup(resp.content, 'xml')
+                    # RSS / Atom: look for item or entry tags
+                    items = soup.find_all(['item', 'entry'])
+                    if items:
+                        for it in items[:3]:
+                            title = it.find('title')
+                            title_text = title.get_text(strip=True) if title else it.get_text(strip=True)
+                            if title_text:
+                                tips.append(f"Update: {title_text}")
+                        # if we found items, move to next source
+                        if tips:
+                            continue
+
+                    # Fallback: search for obvious title elements in HTML
+                    if not tips:
+                        # Try parsing as HTML and pull links/headlines
+                        soup_html = BeautifulSoup(resp.content, 'html.parser')
+                        headlines = []
+                        for tag in ['h1', 'h2', 'h3', 'a']:
+                            for node in soup_html.find_all(tag)[:5]:
+                                text = node.get_text(strip=True)
+                                if text:
+                                    headlines.append(text)
+                        for h in headlines[:3]:
+                            tips.append(f"Update: {h}")
+                except Exception:
+                    # ignore parse errors and continue
+                    pass
                 
         # Add generic tips if no updates found
         if not tips:
@@ -76,18 +132,30 @@ def fetch_latest_disaster_updates(intent_tag):
             ]
             
     except Exception as e:
+        # In case of any unexpected failure, return sensible generic guidance
         tips = [
             "Stay tuned to local authorities for updates",
             "Follow official evacuation orders if given",
             "Keep emergency supplies ready"
         ]
         
-    return tips[:5]  # Return up to 5 most relevant tips
+    # Deduplicate while preserving order and limit to 5
+    seen = set()
+    out = []
+    for t in tips:
+        if t and t not in seen:
+            seen.add(t)
+            out.append(t)
+        if len(out) >= 5:
+            break
+    return out
 
 def clean_up_sentence(sentence):
     """Tokenize and lemmatize input sentence."""
+    # Tokenize and normalize to lowercase before lemmatization so tokens
+    # match the lowercase vocabulary stored in `words.pkl`.
     sentence_words = nltk.word_tokenize(sentence)
-    sentence_words = [lemmatizer.lemmatize(word) for word in sentence_words]
+    sentence_words = [lemmatizer.lemmatize(word.lower()) for word in sentence_words]
     return sentence_words
 
 def bag_of_words(sentence):
