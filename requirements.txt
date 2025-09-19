@@ -32,6 +32,7 @@ opt-einsum==3.4.0
 overpy==0.7
 packaging==25.0
 pandas==2.3.2
+pip==25.2
 protobuf==4.25.8
 pyasn1==0.6.1
 pyasn1-modules==0.4.2
@@ -50,6 +51,7 @@ tensorboard==2.14.1
 tensorboard-data-server==0.7.2
 tensorflow==2.14.0
 tensorflow-estimator==2.14.0
+tensorflow-io-gcs-filesystem==0.31.0
 termcolor==3.1.0
 tqdm==4.67.1
 typing-extensions==4.15.0
