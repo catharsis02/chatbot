@@ -1,8 +1,10 @@
 from flask import Flask, request, jsonify, render_template
 import json
 import random
+from flask_cors import CORS
 
 app = Flask(__name__, template_folder='templates')
+CORS(app)
 
 # Load intents for a lightweight fallback responder when the ML backend is unavailable
 try:

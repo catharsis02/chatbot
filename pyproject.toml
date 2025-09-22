@@ -7,6 +7,7 @@ requires-python = ">=3.11"
 dependencies = [
     "beautifulsoup4>=4.13.5",
     "flask>=3.1.2",
+    "flask-cors>=6.0.1",
     "geopy>=2.4.1",
     "nltk>=3.9.1",
     "numpy<1.25.2",
