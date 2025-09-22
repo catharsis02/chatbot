@@ -7,6 +7,7 @@ certifi==2025.8.3
 charset-normalizer==3.4.3
 click==8.2.1
 flask==3.1.2
+flask-cors==6.0.1
 flatbuffers==25.2.10
 gast==0.6.0
 geographiclib==2.1
